@@ -19,7 +19,7 @@ public class AudioVisualiser : MonoBehaviour
 
     private Transform[] visualList;
     private float[] visualScale;
-    private int amountOfVisuals;
+    private int amountOfVisuals = 10; // The amount of cubes to create
 
 
     // Start is called before the first frame update
@@ -30,11 +30,25 @@ public class AudioVisualiser : MonoBehaviour
         samplesArray = new float[SAMPLE_SIZE];
         spectrumArray = new float[SAMPLE_SIZE];
         sampleRate = AudioSettings.outputSampleRate;
+
+        // Create a line of responsive cubes
+        CreateLineOfCubes();
     }
 
     private void CreateLineOfCubes()
     {
+        // Initialise variables
+        visualScale = new float[amountOfVisuals];
+        visualList = new Transform[amountOfVisuals];
 
+        // Create the cubes
+        for(int i = 0; i < amountOfVisuals; i++)
+        {
+            GameObject cubeGameObject = GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
+            visualList[i] = cubeGameObject.transform; // Adds a cube to the list of visuals at index i
+            visualList[i].position = Vector3.right * i; // Set the spawn position of the cube to 1 unit to the right of the last one
+
+        }
     }
 
     // Update is called once per frame
