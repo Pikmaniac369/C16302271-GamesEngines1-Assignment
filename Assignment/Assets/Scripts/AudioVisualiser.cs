@@ -12,6 +12,7 @@ public class AudioVisualiser : MonoBehaviour
     public float dbVal; // The decibel value
     public float pitchVal;
 
+    public float maxScale = 25.0f;
     public float modifier = 50.0f;
     public float smoothingSpeed = 10.0f; // Stops "snapping" on the way down
 
@@ -83,6 +84,11 @@ public class AudioVisualiser : MonoBehaviour
             if(visualScale[visualIndex] < scaleY)
             {
                 visualScale[visualIndex] = scaleY;
+            }
+
+            if(visualScale[visualIndex] > maxScale)
+            {
+                visualScale[visualIndex] = maxScale;
             }
 
             visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
