@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AudioVisualiser : MonoBehaviour
 {
+    // Declare constants
+    private const int SAMPLE_SIZE = 1024;
+
     // Declare variables for storing audio data
     public float rmsVal; // The audio's average power output
     public float dbVal; // The decibel value
@@ -19,8 +22,8 @@ public class AudioVisualiser : MonoBehaviour
     {
         // Initialise the variables
         audioSource = GetComponent<AudioSource>();
-        samplesArray = new float[1024];
-        spectrumArray = new float[1024];
+        samplesArray = new float[SAMPLE_SIZE];
+        spectrumArray = new float[SAMPLE_SIZE];
         sampleRate = AudioSettings.outputSampleRate;
     }
 
@@ -33,6 +36,22 @@ public class AudioVisualiser : MonoBehaviour
     private void AnalyseSound()
     {
         audioSource.GetOutputData(samplesArray, 0); // Listen for samples on channel 0
+
+        // Get the value for rms
+        int i = 0; // Counter for the for loop
+        float sum = 0;
+
+        for(; i < SAMPLE_SIZE; i++)
+        {
+            sum = sum + (samplesArray[i] * samplesArray[i]);
+        }
+
+        rmsVal = Mathf.Sqrt(sum / SAMPLE_SIZE);
+
+        // Get the decibel value
+        dbVal = 20 * Mathf.Log10(rmsVal / 0.1f);
+
+
 
     }
 }
