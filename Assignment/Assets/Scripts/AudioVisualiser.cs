@@ -38,10 +38,9 @@ public class AudioVisualiser : MonoBehaviour
         audioSource.GetOutputData(samplesArray, 0); // Listen for samples on channel 0
 
         // Get the value for rms
-        int i = 0; // Counter for the for loop
         float sum = 0;
 
-        for(; i < SAMPLE_SIZE; i++)
+        for(int i = 0; i < SAMPLE_SIZE; i++)
         {
             sum = sum + (samplesArray[i] * samplesArray[i]);
         }
@@ -51,7 +50,8 @@ public class AudioVisualiser : MonoBehaviour
         // Get the decibel value
         dbVal = 20 * Mathf.Log10(rmsVal / 0.1f);
 
-
+        // Get the spectrum data from the audio source
+        audioSource.GetSpectrumData(spectrumArray, 0, FFTWindow.BlackmanHarris);
 
     }
 }
