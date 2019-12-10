@@ -19,10 +19,14 @@ public class AudioVisualiser : MonoBehaviour
     public Color maxColor;
 
     // Declare variables for controling cube scaling and movement
-    public float maxScale = 25.0f; // Restricts the maximum height of the cubes
-    public float modifier = 50.0f;
-    public float smoothingSpeed = 10.0f; // Stops "snapping" on the way down
-    public float displayAmount = 0.5f; // Displays only a certain amount of the samples. Between 0 and 1.
+    public float maxScale = 15.0f; // Restricts the maximum height of the cubes
+    public float modifier = 175.0f;
+    public float smoothingSpeed = 20.0f; // Stops "snapping" on the way down
+    public float displayAmount = 0.2f; // Displays only a certain amount of the samples. Between 0 and 1.
+    public float cubeIntensity;
+    public Material cubeMat;
+    public Color maxCubeColor;
+    public Color minCubeColor;
 
     // Declare variables for storing audio data
     private AudioSource audioSource; // Store the audio source
@@ -31,6 +35,7 @@ public class AudioVisualiser : MonoBehaviour
     private float sampleRate; // Store the sample rate of the audio
 
     // Declare variables for storing cubes
+    private Renderer[] rendererList;
     private Transform[] visualList;
     private float[] visualScale;
     public int amountOfVisuals = 64; // The amount of cubes to create
@@ -94,9 +99,10 @@ public class AudioVisualiser : MonoBehaviour
             // Set the cube's position and rotation when it is created
             cubeObject.transform.position = cubePosition;
             cubeObject.transform.rotation = Quaternion.LookRotation(Vector3.forward, cubePosition);
-
+            cubeObject.GetComponent<MeshRenderer>().material = cubeMat;
             // Add the cube to the list of cubes to display
             visualList[i] = cubeObject.transform;
+            //rendererList[i] = cubeObject.GetComponent<MeshRenderer>();
         }
 
     }
@@ -141,6 +147,17 @@ public class AudioVisualiser : MonoBehaviour
 
             // Set the height of the cubes
             visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
+
+            cubeIntensity -= Time.deltaTime * smoothingSpeed;
+
+            if(cubeIntensity < dbVal /40)
+            {
+                cubeIntensity = dbVal / 40;
+            }
+
+            cubeMat.color = Color.Lerp(maxCubeColor, minCubeColor, -cubeIntensity);
+
+
             visualIndex++;
         }
 
@@ -151,12 +168,12 @@ public class AudioVisualiser : MonoBehaviour
         // Reduce the background intensity
         backgroundIntensity -= Time.deltaTime * smoothingSpeed;
 
-        if(backgroundIntensity < dbVal)
+        if(backgroundIntensity < dbVal / 40)
         {
-            backgroundIntensity = dbVal;
+            backgroundIntensity = dbVal / 40;
         }
 
-        backMat.color = Color.Lerp(minColor, maxColor, backgroundIntensity);
+        backMat.color = Color.Lerp(maxColor, minColor, -backgroundIntensity);
     }
 
     private void AnalyseSound()
