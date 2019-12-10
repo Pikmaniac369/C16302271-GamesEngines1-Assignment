@@ -310,7 +310,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -407,3 +407,7 @@ MonoBehaviour:
   rmsVal: 0
   dbVal: 0
   pitchVal: 0
+  maxScale: 25
+  modifier: 50
+  smoothingSpeed: 10
+  displayAmount: 0.5

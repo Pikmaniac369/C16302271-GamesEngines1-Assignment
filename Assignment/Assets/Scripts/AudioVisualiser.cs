@@ -10,16 +10,17 @@ public class AudioVisualiser : MonoBehaviour
     // Declare variables for storing audio data
     public float rmsVal; // The audio's average power output
     public float dbVal; // The decibel value
-    public float pitchVal;
+    public float pitchVal; // The value of the pitch
 
-    public float maxScale = 25.0f;
+    public float maxScale = 25.0f; // Restricts the maximum height of the cubes
     public float modifier = 50.0f;
     public float smoothingSpeed = 10.0f; // Stops "snapping" on the way down
+    public float displayAmount = 0.5f; // Displays only a certain amount of the samples. Between 0 and 1.
 
     private AudioSource audioSource; // Store the audio source
     private float[] samplesArray; // Store the audio samples
     private float[] spectrumArray;
-    private float sampleRate;
+    private float sampleRate; // Store the sample rate of the audio
 
     private Transform[] visualList;
     private float[] visualScale;
@@ -36,7 +37,9 @@ public class AudioVisualiser : MonoBehaviour
         sampleRate = AudioSettings.outputSampleRate;
 
         // Create a line of responsive cubes
-        CreateLineOfCubes();
+        //CreateLineOfCubes();
+        // Create a circle of responsive cubes
+        CreateCircleOfCubes();
     }
 
     private void CreateLineOfCubes()
@@ -55,6 +58,40 @@ public class AudioVisualiser : MonoBehaviour
         }
     }
 
+    private void CreateCircleOfCubes()
+    {
+        visualScale = new float[amountOfVisuals];
+        visualList = new Transform[amountOfVisuals];
+        Vector3 center = Vector3.zero; // Set the center of the circle to be the center of the scene
+        float radius = 10.0f; // The radius of the circle
+
+        // Create the circle of cubes
+        for (int i = 0; i < amountOfVisuals; i++)
+        {
+            // Get the angle at which the cube will be created
+            float angle = i * 1.0f / amountOfVisuals;
+            angle = angle * Mathf.PI * 2;
+
+            // Set the x and y coordinates of the cube when it is created
+            float x = center.x + Mathf.Cos(angle) * radius;
+            float y = center.y + Mathf.Sin(angle) * radius;
+
+            // Get the cube's position when it is created
+            Vector3 cubePosition = center + new Vector3(x, y, 0);
+
+            // Create the cube
+            GameObject cubeObject = GameObject.CreatePrimitive(PrimitiveType.Cube) as GameObject;
+
+            // Set the cube's position and rotation when it is created
+            cubeObject.transform.position = cubePosition;
+            cubeObject.transform.rotation = Quaternion.LookRotation(Vector3.forward, cubePosition);
+
+            // Add the cube to the list of cubes to display
+            visualList[i] = cubeObject.transform;
+        }
+
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -66,7 +103,7 @@ public class AudioVisualiser : MonoBehaviour
     {
         int visualIndex = 0;
         int spectrumIndex = 0;
-        int averageSize = SAMPLE_SIZE / amountOfVisuals;
+        int averageSize = (int)( (SAMPLE_SIZE * displayAmount)/ amountOfVisuals);
 
         while(visualIndex < amountOfVisuals)
         {
@@ -86,11 +123,13 @@ public class AudioVisualiser : MonoBehaviour
                 visualScale[visualIndex] = scaleY;
             }
 
+            // Restrict the maximum height of the cubes
             if(visualScale[visualIndex] > maxScale)
             {
                 visualScale[visualIndex] = maxScale;
             }
 
+            // Set the height of the cubes
             visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
             visualIndex++;
         }
