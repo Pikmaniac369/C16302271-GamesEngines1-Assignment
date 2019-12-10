@@ -17,6 +17,11 @@ public class AudioVisualiser : MonoBehaviour
     private float[] spectrumArray;
     private float sampleRate;
 
+    private Transform[] visualList;
+    private float[] visualScale;
+    private int amountOfVisuals;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +30,11 @@ public class AudioVisualiser : MonoBehaviour
         samplesArray = new float[SAMPLE_SIZE];
         spectrumArray = new float[SAMPLE_SIZE];
         sampleRate = AudioSettings.outputSampleRate;
+    }
+
+    private void CreateLineOfCubes()
+    {
+
     }
 
     // Update is called once per frame
