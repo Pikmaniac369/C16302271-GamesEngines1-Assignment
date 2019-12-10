@@ -7,24 +7,27 @@ public class AudioVisualiser : MonoBehaviour
     // Declare constants
     private const int SAMPLE_SIZE = 1024;
 
-    // Declare variables for storing audio data
+    // Declare variables for storing audio information
     public float rmsVal; // The audio's average power output
     public float dbVal; // The decibel value
     public float pitchVal; // The value of the pitch
 
+    // Declare variables for controling cube scaling and movement
     public float maxScale = 25.0f; // Restricts the maximum height of the cubes
     public float modifier = 50.0f;
     public float smoothingSpeed = 10.0f; // Stops "snapping" on the way down
     public float displayAmount = 0.5f; // Displays only a certain amount of the samples. Between 0 and 1.
 
+    // Declare variables for storing audio data
     private AudioSource audioSource; // Store the audio source
     private float[] samplesArray; // Store the audio samples
     private float[] spectrumArray;
     private float sampleRate; // Store the sample rate of the audio
 
+    // Declare variables for storing cubes
     private Transform[] visualList;
     private float[] visualScale;
-    private int amountOfVisuals = 64; // The amount of cubes to create
+    public int amountOfVisuals = 64; // The amount of cubes to create
 
 
     // Start is called before the first frame update
