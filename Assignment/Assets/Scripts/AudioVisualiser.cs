@@ -12,6 +12,9 @@ public class AudioVisualiser : MonoBehaviour
     public float dbVal; // The decibel value
     public float pitchVal;
 
+    public float modifier = 50.0f;
+    public float smoothingSpeed = 10.0f; // Stops "snapping" on the way down
+
     private AudioSource audioSource; // Store the audio source
     private float[] samplesArray; // Store the audio samples
     private float[] spectrumArray;
@@ -19,7 +22,7 @@ public class AudioVisualiser : MonoBehaviour
 
     private Transform[] visualList;
     private float[] visualScale;
-    private int amountOfVisuals = 10; // The amount of cubes to create
+    private int amountOfVisuals = 64; // The amount of cubes to create
 
 
     // Start is called before the first frame update
@@ -55,6 +58,37 @@ public class AudioVisualiser : MonoBehaviour
     void Update()
     {
         AnalyseSound();
+        UpdateCubes();
+    }
+
+    private void UpdateCubes()
+    {
+        int visualIndex = 0;
+        int spectrumIndex = 0;
+        int averageSize = SAMPLE_SIZE / amountOfVisuals;
+
+        while(visualIndex < amountOfVisuals)
+        {
+            float sum = 0;
+
+            for(int j = 0; j < averageSize; j++)
+            {
+                sum = sum + spectrumArray[spectrumIndex];
+                spectrumIndex++;
+            }
+
+            float scaleY = sum / averageSize * modifier;
+            visualScale[visualIndex] -= Time.deltaTime * smoothingSpeed;
+
+            if(visualScale[visualIndex] < scaleY)
+            {
+                visualScale[visualIndex] = scaleY;
+            }
+
+            visualList[visualIndex].localScale = Vector3.one + Vector3.up * visualScale[visualIndex];
+            visualIndex++;
+        }
+
     }
 
     private void AnalyseSound()
