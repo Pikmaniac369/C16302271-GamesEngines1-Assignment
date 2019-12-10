@@ -12,6 +12,12 @@ public class AudioVisualiser : MonoBehaviour
     public float dbVal; // The decibel value
     public float pitchVal; // The value of the pitch
 
+    //Declare variables for controlling the background
+    public float backgroundIntensity;
+    public Material backMat;
+    public Color minColor;
+    public Color maxColor;
+
     // Declare variables for controling cube scaling and movement
     public float maxScale = 25.0f; // Restricts the maximum height of the cubes
     public float modifier = 50.0f;
@@ -100,6 +106,7 @@ public class AudioVisualiser : MonoBehaviour
     {
         AnalyseSound();
         UpdateCubes();
+        UpdateBackground();
     }
 
     private void UpdateCubes()
@@ -137,6 +144,19 @@ public class AudioVisualiser : MonoBehaviour
             visualIndex++;
         }
 
+    }
+
+    private void UpdateBackground()
+    {
+        // Reduce the background intensity
+        backgroundIntensity -= Time.deltaTime * smoothingSpeed;
+
+        if(backgroundIntensity < dbVal)
+        {
+            backgroundIntensity = dbVal;
+        }
+
+        backMat.color = Color.Lerp(minColor, maxColor, backgroundIntensity);
     }
 
     private void AnalyseSound()
