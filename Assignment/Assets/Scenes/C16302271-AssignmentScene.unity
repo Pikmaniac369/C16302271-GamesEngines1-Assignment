@@ -397,7 +397,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a4fa8a09742fa3b4dad2bbf679a861b6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 677d124de39e27b4fa64b6705af7e7d2, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -500,16 +500,16 @@ MonoBehaviour:
   pitchVal: 0
   backgroundIntensity: 0
   backMat: {fileID: 2100000, guid: ab511392c9f19c64198c68b48d309634, type: 2}
-  minColor: {r: 0.09611962, g: 0.19563222, b: 0.754717, a: 0}
-  maxColor: {r: 0.08877714, g: 0.57445675, b: 0.8962264, a: 0}
+  minColor: {r: 0, g: 0, b: 0, a: 0}
+  maxColor: {r: 0.010590963, g: 0.05243844, b: 0.3207547, a: 0}
   maxScale: 15
   modifier: 175
   smoothingSpeed: 10
-  displayAmount: 0.25
+  displayAmount: 0.2
   cubeIntensity: 0
   cubeMat: {fileID: 2100000, guid: e77675cd314c65f43ba102e6779ea5a8, type: 2}
-  maxCubeColor: {r: 0.9345012, g: 0, b: 1, a: 0}
-  minCubeColor: {r: 0.5188679, g: 0.07730751, b: 0, a: 0}
+  maxCubeColor: {r: 0, g: 1, b: 0.946259, a: 0}
+  minCubeColor: {r: 1, g: 1, b: 0, a: 0}
   amountOfVisuals: 64
 --- !u!1 &1619799806
 GameObject:
