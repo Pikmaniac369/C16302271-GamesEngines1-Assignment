@@ -6,6 +6,13 @@ For this assignment, I created an audio visualiser. Unfortunately though, due to
 
 [![YouTube](http://img.youtube.com/vi/wtXirrO-iNA/0.jpg)](https://www.youtube.com/watch?v=wtXirrO-iNA)
 
+### Description
+My audio visualiser creates a ring of cubes that respond to music in front of a coloured background. The colour of the background and the colour of the ring of cubes change along with the intensity of the music. The more intense the music, the brighter the colour. The less intense the music, the darker the colour.
+
+The audio visualiser loads in music from an audio source component in the main camera. The AudioVisualiser.cs script then gets a collection of samples from the music and divides these samples across the ring of cubes. As the power of the audio changes, the cubes scale on their local y-axes accordingly, creating the desired effect.
+
+The part of the assignment that I am the most proud of is the colour changing of the ring of cubes, as I managed to figure out how to do that without using a tutorial.
+
 ## Week 5
 I will attempt to create a sound visualiser. I will use tutorials like the one below:
 
