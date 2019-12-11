@@ -13,6 +13,9 @@ The audio visualiser loads in music from an audio source component in the main c
 
 The part of the assignment that I am the most proud of is the colour changing of the ring of cubes, as I managed to figure out how to do that without using a tutorial.
 
+### Instructions for Building and Running
+There are no special requirements for building and loading. You simply have to press the play button in the Unity Editor. If you want to change the song that is playing, the audio source component is attached to the main camera. Simply drag and drop a different audio file from the Audio folder onto the audio source component. A few music tracks have been provided.
+
 ## Week 5
 I will attempt to create a sound visualiser. I will use tutorials like the one below:
 
